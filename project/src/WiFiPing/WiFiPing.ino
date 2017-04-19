@@ -21,10 +21,17 @@ char pass[] = "insert password here";  // your network password
 int status = WL_IDLE_STATUS;     // the WiFi radio's status
 
 // Specify IP address or hostname
-String hostName = "192.168.2.26";
+String hostName = "192.168.2.25";
 int pingResult;
 
+// Led Pin Outputs
+int ledRed = 32;
+int ledGreen = 31;
+
 void setup() {
+  pinMode(ledRed, OUTPUT);
+  pinMode(ledGreen, OUTPUT);
+  //Set the pins used to control WiFi breakout
   WiFi.setPins(8,7,4);
   // Initialize serial and wait for port to open:
   Serial.begin(9600);
@@ -67,9 +74,15 @@ void loop() {
     Serial.print("SUCCESS! RTT = ");
     Serial.print(pingResult);
     Serial.println(" ms");
+    //Turn on only Green LED
+    digitalWrite(ledGreen, HIGH);
+    digitalWrite(ledRed, LOW);
   } else {
     Serial.print("FAILED! Error code: ");
     Serial.println(pingResult);
+    //Turn on only Red LED
+    digitalWrite(ledGreen, LOW);
+    digitalWrite(ledRed, HIGH);
   }
 
   delay(5000);
