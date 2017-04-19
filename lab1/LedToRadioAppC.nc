@@ -9,10 +9,9 @@ implementation {
   components LedToRadioC as App;
   components new TimerMilliC() as Timer0;
   components ActiveMessageC;
-  components new AMSenderC(AM_LEDTORADIOMSG);
-  components new AMReceiverC(AM_LEDTORADIOMSG);
-  /*components new DemoSensorC() as Sensor;*/
-  components new PhotoC() as Sensor;
+  components new AMSenderC(AM_BLINKTORADIO);
+  components new AMReceiverC(AM_BLINKTORADIO);
+  components new DemoSensorC() as Sensor;
 
   App.Boot -> MainC;
   App.Leds -> LedsC;

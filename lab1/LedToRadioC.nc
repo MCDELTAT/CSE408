@@ -16,14 +16,13 @@ module LedToRadioC {
 implementation {
   bool busy = FALSE;
   message_t pkt;
-  uint16_t otherMoteSensorValue;
+  uint16_t otherSensorValue = 0;
 
   event void Boot.booted() {
     call AMControl.start();
   }
 
   event void AMControl.startDone(error_t err) {
-    /*otherMoteSensorValue = 0;*/
     if (err == SUCCESS) {
       call Timer0.startPeriodic(TIMER_PERIOD_MILLI);
     }
@@ -64,25 +63,14 @@ implementation {
   event message_t* Receive.receive(message_t* msg, void* payload, uint8_t len) {
     if (len == sizeof(LedToRadioMsg)) {
       LedToRadioMsg* btrpkt = (LedToRadioMsg*)payload;
-      //if recieving from mote w sensor, alarm
-      /*call Leds.led2Toggle();*/
-      if (btrpkt->nodeid == 8) {
-        otherMoteSensorValue = btrpkt->sensorValue;
-        /*call Leds.led2Toggle();*/
-        if (otherMoteSensorValue < 433) {
+      if (btrpkt->nodeid == 8 || btrpkt->nodeid == 7) {
+        // Only blink the Leds on the reciever
+        otherSensorValue = btrpkt->sensorValue;
+        if (otherSensorValue < 600) {
           call Leds.led0Toggle();
           call Leds.led1Toggle();
           call Leds.led2Toggle();
-        } else {
-          call Leds.led0Off();
-          call Leds.led1Off();
-          call Leds.led2Off();
         }
-      } else {
-        //do nothing because wo a sensor it will send garbage values
-        call Leds.led0Off();
-        call Leds.led1Off();
-        call Leds.led2Off();
       }
     }
     return msg;

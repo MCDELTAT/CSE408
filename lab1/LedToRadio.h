@@ -2,9 +2,9 @@
 #define LEDTORADIO_H
 
 enum {
- AM_LEDTORADIOMSG = 10,
+ AM_BLINKTORADIO = 6,
  TIMER_PERIOD_MILLI = 250,
- AM_DEST_ADDR = 0x0007
+ AM_DEST_ADDR = 0xFFFF
 };
 
 typedef nx_struct LedToRadioMsg {
