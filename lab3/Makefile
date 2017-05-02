@@ -1,0 +1,2 @@
+COMPONENT=LedToRadioAppC
+include $(MAKERULES)
