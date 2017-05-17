@@ -40,3 +40,7 @@
 1. 45 = packet byte
 1. 03 AD 00 00 = payload
 1. 1B DB = CRC byte (cyclic redundancy check)
+
+### My Data Packet Breakdown
+Header is 126, 69, with the packet following
+12th Cell is my node_id

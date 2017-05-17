@@ -32,7 +32,7 @@ implementation {
 
   event void Boot.booted() {
     call AMControl.start();
-    settings.detect = 5; //this will make it so it doesn't send accel data right now
+    settings.detect = 2; //this will make it so it doesn't send accel data right now
   }
 
   event void AMControl.startDone(error_t err) {
@@ -88,7 +88,7 @@ implementation {
     if (!busy) {
       LedToRadioMsg* btrpkt = (LedToRadioMsg*)(call Packet.getPayload(&pkt, sizeof (LedToRadioMsg)));
       btrpkt->nodeid = TOS_NODE_ID;
-      btrpkt->sensorValue = variance;
+      btrpkt->accelValue = variance;
       if (call AMSend.send(AM_DEST_ADDR, &pkt, sizeof(LedToRadioMsg)) == SUCCESS) {
         // Set Red LED (LED0)
         call Leds.led0On();
@@ -115,8 +115,7 @@ implementation {
 	    var += diff * diff;
     }
 
-    if (var > 4 * ACCEL_SAMPLES)
-      theft(var); /* ALERT! ALERT! */
+    theft(var); /* ALERT! ALERT! */
   }
 
   /* The acceleration read completed. Post the task that will check for

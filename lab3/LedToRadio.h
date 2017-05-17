@@ -12,6 +12,7 @@ enum {
 typedef nx_struct LedToRadioMsg {
  nx_uint16_t nodeid;
  nx_uint16_t sensorValue;
+ nx_uint16_t accelValue;
 } LedToRadioMsg;
 
 typedef nx_struct settings {
